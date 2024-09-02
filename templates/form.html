@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day Wise Report</title>
+    <script>
+        async function submitForm(event) {
+            event.preventDefault(); // Prevent the default form submission
+            
+            // Show loading spinner
+            document.getElementById('loading').style.display = 'block';
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+
+            // Make POST request to /show
+            const response = await fetch('/show', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(data),
+            });
+
+            // Hide loading spinner
+            document.getElementById('loading').style.display = 'none';
+
+            // Handle response
+            const result = await response.json();
+            if (result.status === 'success') {
+                // Display data
+                document.getElementById('data-detail').textContent = result.data.DataDetail;
+                document.getElementById('total-cards').textContent = result.data.TotalCards;
+                document.getElementById('total-rice').textContent = result.data.TotalRice;
+                
+                // Create table
+                const tableBody = document.getElementById('table-body');
+                tableBody.innerHTML = ''; // Clear previous data
+                result.data.table.forEach(row => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${row.serial_number}</td>
+                        <td>${row.Date}</td>
+                        <td>${row.count}</td>
+                        <td>${row.total_weight}</td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+
+                document.getElementById('results').style.display = 'block'; // Show results section
+            } else {
+                alert(result.error);
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h4 class="center">Transaction Form</h4>
+    <form onsubmit="submitForm(event)" class="form-container">
+        <div class="form-group">
+            <label for="month">Month:</label>
+            <select id="month" name="month">
+                {% for i in range(1, 13) %}
+                    <option value="{{ i }}" {% if i == current_month %}selected{% endif %}>{{ month_names[i-1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="year">Year:</label>
+            <select id="year" name="year">
+                {% for y in range(current_year - 5, current_year + 1) %}
+                    <option value="{{ y }}" {% if y == current_year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="shop_no">Shop Number:</label>
+            <input type="number" id="shop_no" name="shop_no" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="type">Transaction Type:</label>
+            <select id="type" name="type">
+                <option value="0">All</option>
+                <option value="1">Cash pds</option>
+                <option value="2">Cashless pds</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+
+    <!-- <div id="loading" class="loading-spinner" style="display: none;">Loading...</div> -->
+    <div id="loading" class="loading-spinner" style="display: none;">
+        <div class="spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        
+    </div>
+    
+    <div id="results" style="display: none;">
+        <h4 class="center">Transaction Details</h4>
+        <p id="data-detail"></p>
+        
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sl No</th>
+                        <th>Date</th>
+                        <th>Count</th>
+                        <th>Total Weight</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+        <p>Total Rice (in Kgs): <span id="total-rice"></span></p>
+        <p>Total Cards: <span id="total-cards"></span></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,218 @@
+/* Basic reset for margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+    text-align: center; /* Center-align text */
+}
+
+.center {
+    text-align: center; /* Center-align headers */
+}
+
+h4 {
+    margin-bottom: 20px;
+}
+
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Adjust spacing between form items */
+    justify-content: center; /* Center-align form items */
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between label and input */
+}
+
+label {
+    margin: 0; /* Remove default margin for labels */
+    width: 120px; /* Fixed width for labels */
+    font-weight: bold;
+}
+
+select, input[type="number"] {
+    padding: 6px; /* Reduced padding for form elements */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px; /* Smaller font size for inputs */
+    width: 150px; /* Set fixed width for form elements */
+}
+
+input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px; /* Adjusted padding for the button */
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px; /* Smaller font size for the button */
+    width: 120px; /* Set fixed width for the button */
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+    transition-duration: 0.8s;
+}
+
+#loading {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #007bff;
+    display: none;
+}
+
+#results {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 15px; /* Reduced padding for results section */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto; /* Add horizontal scrolling */
+}
+
+table {
+    width: 100%;
+    max-width: 600px; /* Set a maximum width for the table */
+    border-collapse: collapse;
+    margin: 20px auto; /* Center the table horizontally */
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+#table-body {
+    font-weight: bold;
+}
+
+th {
+    background-color: #f4f4f4;
+    padding: 10px; /* Adjusted padding for table headers */
+    text-align: left;
+}
+
+td {
+    padding: 10px; /* Adjusted padding for table cells */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Light grey for even rows */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* White for odd rows */
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+p {
+    font: 1em sans-serif;
+    margin-top: 10px;
+}
+
+#total-cards, #total-rice {
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    /* Media query for smaller screens */
+    th, td {
+        font-size: 12px; /* Reduce font size */
+    }
+
+    table {
+        width: 100%; /* Use full width for table */
+        max-width: none; /* Remove max-width restriction */
+    }
+
+    .form-container {
+        /* flex-direction: column; Stack form elements vertically */
+        justify-content: center;
+    }
+
+    .form-group {
+        flex-direction: column; /* Align label and input vertically */
+        align-items: flex-start; /* Align items to the start */
+    }
+
+    label {
+        width: auto; /* Remove fixed width for labels */
+    }
+}
+
+/* Spinner CSS */
+.spinner {
+    width: 11.2px;  /* Increased size for visibility */
+    height: 11.2px; /* Increased size for visibility */
+    position: relative;
+    animation: spinner-o824ag 1s infinite linear;
+    margin: 10px auto 10px; /* Center the spinner and add spacing below */
+}
+
+.loading-spinner {
+    position: fixed; /* Position it relative to the viewport */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Offset the element's position by half of its width and height */
+    display: flex; /* Flexbox to center the spinner */
+    flex-direction: column; /* Stack the spinner and text vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    font-size: 18px;
+    color: #007bff;
+}
+
+.spinner div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #007bff;
+    border-radius: 50%;
+    animation: spinner-vse6n7 1.25s infinite ease;
+}
+
+.spinner div:nth-child(1) {
+    --rotation: 90;
+}
+
+.spinner div:nth-child(2) {
+    --rotation: 180;
+}
+
+.spinner div:nth-child(3) {
+    --rotation: 270;
+}
+
+.spinner div:nth-child(4) {
+    --rotation: 360;
+}
+
+@keyframes spinner-vse6n7 {
+    0%, 100% {
+        transform: rotate(calc(var(--rotation) * 1deg)) translateY(0);
+    }
+    50% {
+        transform: rotate(calc(var(--rotation) * 1deg)) translateY(300%);
+    }
+}
+
+@keyframes spinner-o824ag {
+    to {
+        transform: rotate(360deg);
+    }
+}
