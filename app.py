@@ -41,7 +41,7 @@ def renderTable():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/table', methods=['GET'])
+@app.route('/', methods=['GET'])
 def show_form():
     current_year = datetime.now().year
     current_month = datetime.now().month
@@ -52,4 +52,4 @@ def show_form():
     return render_template('form.html', current_year=current_year, current_month=current_month, month_names=month_names)
 
 if __name__ == '__main__':
-    app.run(host="192.168.29.176", port=5000, debug=True)
+    app.run()
