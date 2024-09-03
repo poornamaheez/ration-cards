@@ -2,4 +2,3 @@ Flask
 Flask-CORS
 requests
 pandas
-waitress
